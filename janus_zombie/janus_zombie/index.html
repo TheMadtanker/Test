@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="eng">
+<title>Zombie Hunter</title>
+<link rel="stylesheet" href="./css/style.css"/>
+</head>
+<body>
+<p>SCORE:</p>
+<p id='points'>0</p>
+<img id="zombie"/>
+<audio src="src/sound.wav" id="death" preload="auto"></audio>
+<button id='reset'>End</button>
+<script>
+setInterval(randomMove, 2000);
+
+let score = 0;
+let zomb = document.getElementById('zombie');
+let endgame = document.getElementById('reset');
+let explosion = document.getElementById('death');
+
+zomb.onclick = eliminate;
+endgame.onclick = scoreReset;
+
+zomb.src = "images/zombie.gif";
+zomb.style.left = (window.innerWidth / 2) - 125 + "px"; 
+zomb.style.top = (window.innerHeight / 2) - 175 + "px";
+zomb.style.position='absolute';
+
+function randomMove(){
+    myLeft = Math.random() * (window.innerWidth - 250);
+    myTop = Math.random() * (window.innerHeight - 250);
+    zomb.style.position = 'absolute';
+    zomb.style.left = myLeft + "px"; 
+    zomb.style.top = myTop + "px"; 
+}
+function eliminate(){
+    explosion.play();
+    zomb.src = "images/smoke.gif";
+    setTimeout(imgSwap, 750);
+    addScore();
+}
+function imgSwap(){
+    zomb.src = "images/zombie.gif";
+}
+function addScore(){
+    score += 1;
+    document.getElementById('points').innerHTML = score;
+}
+function scoreReset(){
+    randomMove();
+    score = 0;
+    document.getElementById('points').innerHTML = score;
+}
+</script>
+</body>
+</html>
